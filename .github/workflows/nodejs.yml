@@ -1,12 +1,12 @@
-name: Node.js CI/CD
+name: Node.js CI/CD # Name of the workflow
 
-on:
+on: # Trigger the workflow on push or pull request to the main branch
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
-jobs:
+jobs: # jobs define the tasks to be run
   build:
     runs-on: ubuntu-latest
 
