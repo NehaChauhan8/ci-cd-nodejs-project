@@ -1,33 +1,27 @@
-name: Node.js CI/CD # Name of the workflow
+name: Node CI/CD Pipeline
 
-on: # Trigger the workflow on push or pull request to the main branch
+on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
-jobs: # jobs define the tasks to be run
+jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run tests
-      run: npm test --if-present
+      - name: Run tests
+        run: npm test --if-present
 
-    - name: Build application
-      run: npm run build --if-present
+      - name: Build Docker image
+        run: docker build -t ci-cd-nodejs-project .
